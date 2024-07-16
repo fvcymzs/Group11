@@ -166,15 +166,30 @@ void InitScene()
     Sphere[1].materialID = 1;
     
     //Mercury
-    Sphere[2].center = vec3(3.0 * cos(iTime), 10.0, 3.0 * sin(iTime));
-    Sphere[2].radius = 0.1;
+    Sphere[2].center = vec3(3.0 * cos(iTime * 2.0), 10.0, 3.0 * sin(iTime * 2.0));
+    Sphere[2].radius = 0.08;
     Sphere[2].materialID = 2;
     
     //Venus
-    Sphere[3].center = vec3(3.5 * cos(iTime), 10.0, 3.5 * sin(iTime));
-    Sphere[3].radius = 0.1;
+    Sphere[3].center = vec3(4.0 * cos(iTime * 0.83), 10.1, 4.0 * sin(iTime * 0.83));
+    Sphere[3].radius = 0.16;
     Sphere[3].materialID = 2;
-
+    
+    //earth
+    Sphere[4].center = vec3(5.0 * cos(iTime * 0.5), 10.1, 5.0 * sin(iTime * 0.5));
+    Sphere[4].radius = 0.18;
+    Sphere[4].materialID = 3;
+    
+    //Mars
+    Sphere[5].center = vec3(5.2 * cos(iTime * 0.44), 10.1, 5.2 * sin(iTime * 0.44));
+    Sphere[5].radius = 0.1;
+    Sphere[5].materialID = 5;
+    
+    //Jupiter
+    Sphere[6].center = vec3(6.5 * cos(iTime * 0.44), 10.1, 6.5 * sin(iTime * 0.44));
+    Sphere[6].radius = 0.5;
+    Sphere[6].materialID = 2;
+    
   
     // Silver material.
     Material[0].k_d = vec3( 0.2, 0.2, 0.2 );
@@ -205,18 +220,18 @@ void InitScene()
     Material[3].n = 128.0;
     
     // Red plastic material.
-    Material[4].k_d = vec3( 0.8, 0.2, 0.5 );
-    Material[4].k_a = 0.2 * Material[4].k_d;
-    Material[4].k_r = vec3(1.0, 1.0, 1.0);
-    Material[4].k_rg = 0.5 * Material[4].k_r;
-    Material[4].n = 128.0;
+    Material[5].k_d = vec3( 0.8, 0.2, 0.5 );
+    Material[5].k_a = 0.2 * Material[4].k_d;
+    Material[5].k_r = vec3(1.0, 1.0, 1.0);
+    Material[5].k_rg = 0.5 * Material[4].k_r;
+    Material[5].n = 128.0;
     
     // non-reflective purple material.
-    Material[5].k_d = vec3(0.6, 0.3, 0.8);
-    Material[5].k_a = 0.2 * Material[5].k_d;
-    Material[5].k_r = vec3(0.0, 0.0, 0.0); // No reflection
-    Material[5].k_rg = vec3(0.0, 0.0, 0.0); // No global reflection
-    Material[5].n = 0.0;
+    Material[6].k_d = vec3(0.6, 0.3, 0.8);
+    Material[6].k_a = 0.2 * Material[5].k_d;
+    Material[6].k_r = vec3(0.0, 0.0, 0.0); // No reflection
+    Material[6].k_rg = vec3(0.0, 0.0, 0.0); // No global reflection
+    Material[6].n = 0.0;
 
     // Light 0.
     Light[0].position = vec3( -2.0, 20.0, -4.0 );
