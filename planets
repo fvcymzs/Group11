@@ -167,22 +167,22 @@ void InitScene()
     
     //Mercury
     Sphere[2].center = vec3(3.0 * cos(iTime * 4.0), 10.0, 3.0 * sin(iTime * 4.0));
-    Sphere[2].radius = 0.08;
+    Sphere[2].radius = 0.1;
     Sphere[2].materialID = 2;
     
     //Venus
     Sphere[3].center = vec3(4.0 * cos(iTime * 1.67), 10.1, 4.0 * sin(iTime * 1.67));
-    Sphere[3].radius = 0.16;
+    Sphere[3].radius = 0.18;
     Sphere[3].materialID = 2;
     
     //earth
     Sphere[4].center = vec3(5.0 * cos(iTime * 1.0), 0.9, 5.0 * sin(iTime * 1.0));
-    Sphere[4].radius = 0.18;
+    Sphere[4].radius = 0.2;
     Sphere[4].materialID = 3;
     
     //Mars
     Sphere[5].center = vec3(5.2 * cos(iTime * 0.53), 10.0, 5.2 * sin(iTime * 0.53));
-    Sphere[5].radius = 0.1;
+    Sphere[5].radius = 0.3;
     Sphere[5].materialID = 5;
     
     //Jupiter
@@ -197,12 +197,12 @@ void InitScene()
     
     //Uranus
     Sphere[8].center = vec3(13.0 * cos(iTime * 0.012), 10.1, 13.0 * sin(iTime * 0.012));
-    Sphere[8].radius = 0.32;
+    Sphere[8].radius = 0.34;
     Sphere[8].materialID = 2;
     
     //Neptune
     Sphere[9].center = vec3(17.0 * cos(iTime * 0.006), 10.0, 17.0 * sin(iTime * 0.006));
-    Sphere[9].radius = 0.3;
+    Sphere[9].radius = 0.2;
     Sphere[9].materialID = 2;
     
   
