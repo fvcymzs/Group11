@@ -49,7 +49,7 @@ const int NUM_ITERATIONS = 2;
 // Constants for the scene objects.
 const int NUM_LIGHTS = 10;
 const int NUM_MATERIALS = 20;
-const int NUM_PLANES = 5;
+const int NUM_PLANES = 6;
 const int NUM_SPHERES = 20;
 
 
@@ -160,6 +160,14 @@ void InitScene()
     Plane[4].D = -20.0; 
     Plane[4].materialID = 0; // Silver material
 
+    // 土星环 
+    Plane[5].A = 0.0; 
+    Plane[5].B = 1.0;
+    Plane[5].C = 0.0;
+    Plane[5].D =10.5; 
+    Plane[5].materialID = 11; // Silver material
+    
+
     // sun
     Sphere[0].center = vec3(0.0, 10.0, 0.0 );
     Sphere[0].radius = 2.0;
@@ -210,6 +218,12 @@ void InitScene()
     Sphere[9].center = vec3(5.0 * cos(iTime * 1.0) + 0.4 * cos(iTime * 10.0), 9.9, 5.0 * sin(iTime * 1.0) + 0.4 * sin(iTime * 10.0));
     Sphere[9].radius = 0.05;
     Sphere[9].materialID = 10;
+
+    // Meteorite
+    Sphere[10].center = vec3(5.5 * cos(iTime * 1.0), 9.9, 5.5 * sin(iTime * 1.0));
+    Sphere[10].radius = 0.15;  // 根据需要调整陨石的大小
+    Sphere[10].materialID = 12;  // 假设 12 是陨石的材质ID，你可以根据需要定义新的材质
+
     
   
     // Silver material.
@@ -289,6 +303,22 @@ void InitScene()
     Material[10].k_r = vec3(0.3, 0.3, 0.3);
     Material[10].k_rg = vec3(0.15, 0.15, 0.15);
     Material[10].n = 128.0;
+
+    // 定义土星环的材质属性
+    Material[11].k_d = vec3(0.6, 0.6, 0.6); // 土星环的漫反射颜色
+    Material[11].k_a = 0.2 * Material[11].k_d; // 土星环的环境光反射颜色
+    Material[11].k_r = vec3(0.8, 0.8, 0.8); // 土星环的镜面反射颜色
+    Material[11].k_rg = vec3(0.4, 0.4, 0.4); // 土星环的镜面环境反射颜色
+    Material[11].n = 128.0; // 土星环的反射指数，控制镜面高光大小
+
+
+    // Meteorite material.
+    Material[12].k_d = vec3(0.5, 0.5, 0.5);  // 陨石的漫反射颜色（灰色）
+    Material[12].k_a = 0.2 * Material[12].k_d;  // 环境光反射颜色
+    Material[12].k_r = vec3(0.3, 0.3, 0.3);  // 陨石的镜面反射颜色（灰色）
+    Material[12].k_rg = vec3(0.1, 0.1, 0.1);  // 陨石的镜面环境反射颜色（灰色）
+    Material[12].n = 64.0;  // 反射指数，控制镜面高光大小
+
 
     // Light 0.
     Light[0].position = vec3( 0.0, 20.0, 0.0 );
