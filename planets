@@ -207,7 +207,7 @@ void InitScene()
     
   
     // Silver material.
-    Material[0].k_d = vec3( 0.2, 0.2, 0.2 );
+    Material[0].k_d = vec3( 0.3, 0.3, 0.3 );
     Material[0].k_a = 0.2 * Material[0].k_d;
     Material[0].k_r = 2.0 * Material[0].k_d;
     Material[0].k_rg = 0.5 * Material[0].k_r;
@@ -283,20 +283,13 @@ void InitScene()
     Light[0].I_a = vec3( 1.0, 0.8, 0.6  );
     Light[0].I_source = vec3( 0.5, 0.4, 0.35 );
 
-    // Light 1.
-    Light[1].position = vec3(10.0 , 20.0, 10.0 );
-    Light[1].I_a = vec3( 1.0, 1.0, 1.0 );
-    Light[1].I_source = vec3( 0.5, 0.6, 0.7 );
-    
     // sun
     Light[2].position = vec3(0.0, 10.0, 0.0);
-    Light[2].I_a = vec3( 1.0, 0.8, 0.6);
-    Light[2].I_source = vec3( 1.0, 0.8, 0.6);
+    Light[2].I_a = vec3(2.0, 1.6, 1.2);  // 增强环境光
+    Light[2].I_source = vec3(5.0, 4.0, 3.5);  // 增强光源强度
+
     
-    // Light 2.
-    Light[3].position = vec3( -10.0 , 20.0, -10.0 );
-    Light[3].I_a = vec3( 1.0, 1.0, 1.0 );
-    Light[3].I_source = vec3( 0.5, 0.6, 0.7 );
+    
 }
 
 
