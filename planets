@@ -204,6 +204,12 @@ void InitScene()
     Sphere[8].center = vec3(17.0 * cos(iTime * 0.006), 10.0, 17.0 * sin(iTime * 0.006));
     Sphere[8].radius = 0.2;
     Sphere[8].materialID = 9;
+
+    // moon
+    // rotating with the earth
+    Sphere[9].center = vec3(5.0 * cos(iTime * 1.0) + 0.4 * cos(iTime * 10.0), 9.9, 5.0 * sin(iTime * 1.0) + 0.4 * sin(iTime * 10.0));
+    Sphere[9].radius = 0.05;
+    Sphere[9].materialID = 10;
     
   
     // Silver material.
@@ -257,7 +263,6 @@ void InitScene()
     Material[6].n = 64.0;
 
     // Saturn material.
-    // Saturn material.
     Material[7].k_d = vec3(210.0 / 255.0, 180.0 / 255.0, 140.0 / 255.0);
     Material[7].k_a = 0.2 * Material[7].k_d;
     Material[7].k_r = vec3(0.3, 0.25, 0.2);
@@ -277,6 +282,13 @@ void InitScene()
     Material[9].k_r = vec3(0.1, 0.1, 0.2);
     Material[9].k_rg = vec3(0.05, 0.05, 0.1);
     Material[9].n = 64.0;
+
+    // Moon material.
+    Material[10].k_d = vec3(252.0 / 255.0, 254.0 / 255.0, 218.0 / 255.0);
+    Material[10].k_a = 0.2 * Material[10].k_d;
+    Material[10].k_r = vec3(0.3, 0.3, 0.3);
+    Material[10].k_rg = vec3(0.15, 0.15, 0.15);
+    Material[10].n = 128.0;
 
     // Light 0.
     Light[0].position = vec3( 0.0, 20.0, 0.0 );
