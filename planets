@@ -50,8 +50,9 @@ const int NUM_ITERATIONS = 2;
 const int NUM_LIGHTS = 10;
 const int NUM_MATERIALS = 20;
 const int NUM_PLANES = 6;
-const int NUM_SPHERES = 20;
+const int NUM_SPHERES = 50;
 const int NUM_METEORITE = 3;
+const int NUM_ASTEROIDS = 30;
 
 
 //============================================================================
@@ -232,11 +233,24 @@ void InitScene()
 
     // Meteorite
     for (int i = 0; i < NUM_METEORITE; i++) {
-        float circle = (rand() + 0.5) * 10.0; // (5,15)
-        float velocity = (rand() + 0.1) * 10.0; // (1,11)
-        Sphere[i+10].center = vec3(circle * cos(iTime * velocity), 10.0, circle * sin(iTime * velocity));
-        Sphere[i+10].radius = 0.03;
+        float circle = rand() * 14.0 + 3.0; // (3.0,17.0)
+        float delx = rand() + 9.5; // (9.5,10.5)
+        float velocity = rand() * 4.0; // (0,4)
+        float rad = rand() * 0.02 + 0.02; // (0.02, 0.04)
+        Sphere[i+10].center = vec3(circle * cos(iTime * velocity), delx, circle * sin(iTime * velocity));
+        Sphere[i+10].radius = rad;
         Sphere[i+10].materialID = 12;
+    }
+
+    // Asteroids
+    for (int i = 0; i < NUM_ASTEROIDS; i++) {
+        float circle = rand() * 0.7 + 5.5; // (5.5,6.2)
+        float delx = rand() + 9.5; // (9.5,10.5)
+        float velocity = rand() * 0.4 + 0.1; // (0.1,0.5)
+        float rad = rand() * 0.02 + 0.02; // (0.02, 0.04)
+        Sphere[i+10+NUM_METEORITE].center = vec3(circle * cos(iTime * velocity), delx, circle * sin(iTime * velocity));
+        Sphere[i+10+NUM_METEORITE].radius = rad;
+        Sphere[i+10+NUM_METEORITE].materialID = 13;
     }
 
 
@@ -331,6 +345,13 @@ void InitScene()
     Material[12].k_r = vec3(0.3, 0.3, 0.3);  // 陨石的镜面反射颜色（灰色）
     Material[12].k_rg = vec3(0.1, 0.1, 0.1);  // 陨石的镜面环境反射颜色（灰色）
     Material[12].n = 64.0;  // 反射指数，控制镜面高光大小
+
+    // Asteroids material.
+    Material[13].k_d = vec3(209.0 / 255.0, 121.0 / 255.0, 58.0 / 255.0);
+    Material[13].k_a = 0.2 * Material[10].k_d;
+    Material[13].k_r = vec3(0.3, 0.3, 0.3);
+    Material[13].k_rg = vec3(0.15, 0.15, 0.15);
+    Material[13].n = 128.0;
 
 
     // Light 0.
