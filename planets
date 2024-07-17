@@ -51,6 +51,7 @@ const int NUM_LIGHTS = 10;
 const int NUM_MATERIALS = 20;
 const int NUM_PLANES = 6;
 const int NUM_SPHERES = 20;
+const int NUM_METEORITE = 3;
 
 
 //============================================================================
@@ -108,6 +109,16 @@ Sphere_t Sphere[NUM_SPHERES];
 Light_t Light[NUM_LIGHTS];
 Material_t Material[NUM_MATERIALS];
 
+
+// random function returns float numbers in (0,1)
+float co1 = 0.6522891;
+float co2 = 0.4654321;
+float rand() {
+    vec2 co = vec2(co1, co2);
+    co1 = fract(sin(co1)*486521.2);
+    co2 = fract(sin(co2)*103985.8);
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -220,9 +231,13 @@ void InitScene()
     Sphere[9].materialID = 10;
 
     // Meteorite
-    Sphere[10].center = vec3(5.5 * cos(iTime * 1.0), 9.9, 5.5 * sin(iTime * 1.0));
-    Sphere[10].radius = 0.15;
-    Sphere[10].materialID = 12;
+    for (int i = 0; i < NUM_METEORITE; i++) {
+        float circle = (rand() + 0.5) * 10.0; // (5,15)
+        float velocity = (rand() + 0.1) * 10.0; // (1,11)
+        Sphere[i+10].center = vec3(circle * cos(iTime * velocity), 10.0, circle * sin(iTime * velocity));
+        Sphere[i+10].radius = 0.03;
+        Sphere[i+10].materialID = 12;
+    }
 
 
     // Silver material.
@@ -309,7 +324,6 @@ void InitScene()
     Material[11].k_r = vec3(0.8, 0.8, 0.8); // 土星环的镜面反射颜色
     Material[11].k_rg = vec3(0.4, 0.4, 0.4); // 土星环的镜面环境反射颜色
     Material[11].n = 128.0; // 土星环的反射指数，控制镜面高光大小
-
 
     // Meteorite material.
     Material[12].k_d = vec3(130.0 / 255.0, 106.0 / 255.0, 89.0 / 255.0);  // 陨石的漫反射颜色（灰色）
