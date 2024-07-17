@@ -347,6 +347,11 @@ void InitScene()
     Light[0].I_a = vec3( 1.0, 0.8, 0.6 );
     Light[0].I_source = vec3( 0.5, 0.4, 0.35 );
 
+    // 添加恒星光源
+    Light[1].position = vec3(0.0, 50.0, 0.0); // 设置光源位置，可以根据需要调整高度
+    Light[1].I_a = vec3(1.0, 1.0, 1.0); // 环境光分量，可以增加整体亮度
+    Light[1].I_source = vec3(1.0, 1.0, 1.0); // 光源的强度，可以根据需要调整
+
     // sun
     Light[2].position = vec3(0.0, 10.0, 0.0);
     Light[2].I_a = vec3(2.0, 1.6, 1.2);  // 增强环境光
