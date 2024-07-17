@@ -43,16 +43,16 @@ const float DEFAULT_TMIN = 10.0e-4;
 const float DEFAULT_TMAX = 10.0e6;
 
 // Equivalent to number of recursion levels (0 means ray-casting only).
-// We are using iterations to replace recursions.
+// We are using iterations to replace recursions.https://www.cthulhuclub.com/
 const int NUM_ITERATIONS = 2;
 
 // Constants for the scene objects.
 const int NUM_LIGHTS = 10;
 const int NUM_MATERIALS = 20;
-const int NUM_PLANES = 6;
-const int NUM_SPHERES = 50;
+const int NUM_PLANES = 5;
+const int NUM_SPHERES = 70;
 const int NUM_METEORITE = 3;
-const int NUM_ASTEROIDS = 30;
+const int NUM_ASTEROIDS = 50;
 
 
 //============================================================================
@@ -171,13 +171,6 @@ void InitScene()
     Plane[4].C = 0.0;
     Plane[4].D = -20.0;
     Plane[4].materialID = 0; // Silver material
-
-    // 土星环
-    Plane[5].A = 0.0;
-    Plane[5].B = 1.0;
-    Plane[5].C = 0.0;
-    Plane[5].D = 10.5;
-    Plane[5].materialID = 11;
     
 
     // sun
@@ -237,9 +230,10 @@ void InitScene()
         float delx = rand() + 9.5; // (9.5,10.5)
         float velocity = rand() * 4.0; // (0,4)
         float rad = rand() * 0.02 + 0.02; // (0.02, 0.04)
-        Sphere[i+10].center = vec3(circle * cos(iTime * velocity), delx, circle * sin(iTime * velocity));
+        float t0 = rand() * 100.0;
+        Sphere[i+10].center = vec3(circle * cos((iTime + t0) * velocity), delx, circle * sin((iTime + t0) * velocity));
         Sphere[i+10].radius = rad;
-        Sphere[i+10].materialID = 12;
+        Sphere[i+10].materialID = 11;
     }
 
     // Asteroids
@@ -248,9 +242,10 @@ void InitScene()
         float delx = rand() + 9.5; // (9.5,10.5)
         float velocity = rand() * 0.4 + 0.1; // (0.1,0.5)
         float rad = rand() * 0.02 + 0.02; // (0.02, 0.04)
-        Sphere[i+10+NUM_METEORITE].center = vec3(circle * cos(iTime * velocity), delx, circle * sin(iTime * velocity));
+        float t0 = rand() * 100.0;
+        Sphere[i+10+NUM_METEORITE].center = vec3(circle * cos((iTime + t0) * velocity), delx, circle * sin((iTime + t0) * velocity));
         Sphere[i+10+NUM_METEORITE].radius = rad;
-        Sphere[i+10+NUM_METEORITE].materialID = 13;
+        Sphere[i+10+NUM_METEORITE].materialID = 12;
     }
 
 
@@ -330,28 +325,21 @@ void InitScene()
     Material[10].k_a = 0.2 * Material[10].k_d;
     Material[10].k_r = vec3(0.3, 0.3, 0.3);
     Material[10].k_rg = vec3(0.15, 0.15, 0.15);
-    Material[10].n = 128.0;
-
-    // 定义土星环的材质属性
-    Material[11].k_d = vec3(60.0 / 255.0, 31.0 / 255.0, 118.0 / 255.0); // 土星环的漫反射颜色
-    Material[11].k_a = 0.2 * Material[11].k_d; // 土星环的环境光反射颜色
-    Material[11].k_r = vec3(0.8, 0.8, 0.8); // 土星环的镜面反射颜色
-    Material[11].k_rg = vec3(0.4, 0.4, 0.4); // 土星环的镜面环境反射颜色
-    Material[11].n = 128.0; // 土星环的反射指数，控制镜面高光大小
+    Material[10].n = 96.0;
 
     // Meteorite material.
-    Material[12].k_d = vec3(130.0 / 255.0, 106.0 / 255.0, 89.0 / 255.0);  // 陨石的漫反射颜色（灰色）
-    Material[12].k_a = 0.2 * Material[12].k_d;  // 环境光反射颜色
-    Material[12].k_r = vec3(0.3, 0.3, 0.3);  // 陨石的镜面反射颜色（灰色）
-    Material[12].k_rg = vec3(0.1, 0.1, 0.1);  // 陨石的镜面环境反射颜色（灰色）
-    Material[12].n = 64.0;  // 反射指数，控制镜面高光大小
+    Material[11].k_d = vec3(130.0 / 255.0, 106.0 / 255.0, 89.0 / 255.0);
+    Material[11].k_a = 0.2 * Material[12].k_d;
+    Material[11].k_r = vec3(0.3, 0.3, 0.3);
+    Material[11].k_rg = vec3(0.1, 0.1, 0.1);
+    Material[11].n = 128.0;
 
     // Asteroids material.
-    Material[13].k_d = vec3(209.0 / 255.0, 121.0 / 255.0, 58.0 / 255.0);
-    Material[13].k_a = 0.2 * Material[10].k_d;
-    Material[13].k_r = vec3(0.3, 0.3, 0.3);
-    Material[13].k_rg = vec3(0.15, 0.15, 0.15);
-    Material[13].n = 128.0;
+    Material[12].k_d = vec3(25.0 / 255.0, 25.0 / 255.0, 10.0 / 255.0);
+    Material[12].k_a = 0.2 * Material[10].k_d;
+    Material[12].k_r = vec3(0.2, 0.2, 0.2);
+    Material[12].k_rg = vec3(0.1, 0.1, 0.1);
+    Material[12].n = 128.0;
 
 
     // Light 0.
