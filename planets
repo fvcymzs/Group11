@@ -143,29 +143,29 @@ void InitScene()
     Plane[2].A = 1.0; // Normal vector in the x-direction
     Plane[2].B = 0.0;
     Plane[2].C = 0.0;
-    Plane[2].D = 20.0; 
+    Plane[2].D = 20.0;
     Plane[2].materialID = 0; // Silver material
     
-    // New vertical silver plane 
-    Plane[3].A = 1.0; 
+    // New vertical silver plane
+    Plane[3].A = 1.0;
     Plane[3].B = 0.0;
     Plane[3].C = 0.0;
-    Plane[3].D =-20.0; 
+    Plane[3].D =-20.0;
     Plane[3].materialID = 0; // Silver material
     
     // New vertical silver plane perpendicular to the other two planes.
     Plane[4].A = 0.0; // Normal vector in the x-direction
     Plane[4].B = 0.0;
     Plane[4].C = 0.0;
-    Plane[4].D = -20.0; 
+    Plane[4].D = -20.0;
     Plane[4].materialID = 0; // Silver material
 
-    // 土星环 
-    Plane[5].A = 0.0; 
+    // 土星环
+    Plane[5].A = 0.0;
     Plane[5].B = 1.0;
     Plane[5].C = 0.0;
-    Plane[5].D =10.5; 
-    Plane[5].materialID = 11; // Silver material
+    Plane[5].D = 10.5;
+    Plane[5].materialID = 11;
     
 
     // sun
@@ -221,13 +221,12 @@ void InitScene()
 
     // Meteorite
     Sphere[10].center = vec3(5.5 * cos(iTime * 1.0), 9.9, 5.5 * sin(iTime * 1.0));
-    Sphere[10].radius = 0.15;  // 根据需要调整陨石的大小
-    Sphere[10].materialID = 12;  // 假设 12 是陨石的材质ID，你可以根据需要定义新的材质
+    Sphere[10].radius = 0.15;
+    Sphere[10].materialID = 12;
 
-    
-  
+
     // Silver material.
-    Material[0].k_d = vec3( 0.3, 0.3, 0.3 );
+    Material[0].k_d = vec3(0.3, 0.3, 0.3);
     Material[0].k_a = 0.2 * Material[0].k_d;
     Material[0].k_r = 2.0 * Material[0].k_d;
     Material[0].k_rg = 0.5 * Material[0].k_r;
@@ -241,33 +240,33 @@ void InitScene()
     Material[1].n = 64.0;
 
      // Mercury material.
-    Material[2].k_d = vec3(188.0 / 255.0, 188.0 / 255.0, 169.0 / 255.0);  
+    Material[2].k_d = vec3(188.0 / 255.0, 188.0 / 255.0, 169.0 / 255.0);
     Material[2].k_a = 0.2 * Material[2].k_d;
-    Material[2].k_r = vec3(0.1, 0.1, 0.1); 
-    Material[2].k_rg = vec3(0.05, 0.05, 0.05);  
+    Material[2].k_r = vec3(0.1, 0.1, 0.1);
+    Material[2].k_rg = vec3(0.05, 0.05, 0.05);
     Material[2].n = 128.0;
 
 
     // Venus material.
-    Material[3].k_d = vec3(237.0 / 255.0, 201.0 / 255.0, 175.0 / 255.0);  // 淡黄色
+    Material[3].k_d = vec3(237.0 / 255.0, 201.0 / 255.0, 175.0 / 255.0);
     Material[3].k_a = 0.2 * Material[3].k_d;
-    Material[3].k_r = vec3(0.2, 0.2, 0.2);  
-    Material[3].k_rg = vec3(0.1, 0.1, 0.1); 
-    Material[3].n = 64.0; 
+    Material[3].k_r = vec3(0.2, 0.2, 0.2);
+    Material[3].k_rg = vec3(0.1, 0.1, 0.1);
+    Material[3].n = 64.0;
     
     // earth material.
-    Material[4].k_d = vec3(50.0 / 255.0, 100.0 / 255.0, 230.0 / 255.0);  
+    Material[4].k_d = vec3(50.0 / 255.0, 100.0 / 255.0, 230.0 / 255.0);
     Material[4].k_a = 0.2 * Material[4].k_d;
-    Material[4].k_r = vec3(0.3, 0.3, 0.3);  
-    Material[4].k_rg = vec3(0.15, 0.15, 0.15);  
-    Material[4].n = 128.0;  
+    Material[4].k_r = vec3(0.3, 0.3, 0.3);
+    Material[4].k_rg = vec3(0.15, 0.15, 0.15);
+    Material[4].n = 128.0;
     
     // Mars material.
-    Material[5].k_d = vec3(210.0 / 255.0, 105.0 / 255.0, 30.0 / 255.0); 
+    Material[5].k_d = vec3(210.0 / 255.0, 105.0 / 255.0, 30.0 / 255.0);
     Material[5].k_a = 0.2 * Material[5].k_d;
-    Material[5].k_r = vec3(0.2, 0.1, 0.1); 
-    Material[5].k_rg = vec3(0.1, 0.05, 0.05);  
-    Material[5].n = 64.0; 
+    Material[5].k_r = vec3(0.2, 0.1, 0.1);
+    Material[5].k_rg = vec3(0.1, 0.05, 0.05);
+    Material[5].n = 64.0;
 
     // Jupiter material.
     Material[6].k_d = vec3(209.0 / 255.0, 139.0 / 255.0, 71.0 / 255.0);
@@ -305,7 +304,7 @@ void InitScene()
     Material[10].n = 128.0;
 
     // 定义土星环的材质属性
-    Material[11].k_d = vec3(0.6, 0.6, 0.6); // 土星环的漫反射颜色
+    Material[11].k_d = vec3(60.0 / 255.0, 31.0 / 255.0, 118.0 / 255.0); // 土星环的漫反射颜色
     Material[11].k_a = 0.2 * Material[11].k_d; // 土星环的环境光反射颜色
     Material[11].k_r = vec3(0.8, 0.8, 0.8); // 土星环的镜面反射颜色
     Material[11].k_rg = vec3(0.4, 0.4, 0.4); // 土星环的镜面环境反射颜色
@@ -313,7 +312,7 @@ void InitScene()
 
 
     // Meteorite material.
-    Material[12].k_d = vec3(0.5, 0.5, 0.5);  // 陨石的漫反射颜色（灰色）
+    Material[12].k_d = vec3(130.0 / 255.0, 106.0 / 255.0, 89.0 / 255.0);  // 陨石的漫反射颜色（灰色）
     Material[12].k_a = 0.2 * Material[12].k_d;  // 环境光反射颜色
     Material[12].k_r = vec3(0.3, 0.3, 0.3);  // 陨石的镜面反射颜色（灰色）
     Material[12].k_rg = vec3(0.1, 0.1, 0.1);  // 陨石的镜面环境反射颜色（灰色）
@@ -322,7 +321,7 @@ void InitScene()
 
     // Light 0.
     Light[0].position = vec3( 0.0, 20.0, 0.0 );
-    Light[0].I_a = vec3( 1.0, 0.8, 0.6  );
+    Light[0].I_a = vec3( 1.0, 0.8, 0.6 );
     Light[0].I_source = vec3( 0.5, 0.4, 0.35 );
 
     // sun
@@ -330,8 +329,6 @@ void InitScene()
     Light[2].I_a = vec3(2.0, 1.6, 1.2);  // 增强环境光
     Light[2].I_source = vec3(5.0, 4.0, 3.5);  // 增强光源强度
 
-    
-    
 }
 
 
@@ -394,9 +391,6 @@ bool IntersectSphere( in Sphere_t sph, in Ray_t ray, in float tmin, in float tma
     // TASK: WRITE YOUR CODE HERE. //
     /////////////////////////////////
 
-    
-
-
     vec3 oc = ray.o - sph.center;
     float a = dot(ray.d, ray.d);
     float b = 2.0 * dot(oc, ray.d);
@@ -442,10 +436,6 @@ bool IntersectSphere( in Sphere_t sph, in Ray_t ray, in float tmin, in float tma
     /////////////////////////////////
     // TASK: WRITE YOUR CODE HERE. //
     /////////////////////////////////
-
-    
-
-
 
     vec3 oc = ray.o - sph.center;
     float a = dot(ray.d, ray.d);
@@ -533,10 +523,6 @@ vec3 CastRay( in Ray_t ray,
     // TASK: WRITE YOUR CODE HERE. //
     /////////////////////////////////
 
-
-
-
-
     // Try intersecting input ray with all the planes and spheres,
     // and record the front-most (nearest) intersection.
     for (int i = 0; i < NUM_PLANES; i++) {
@@ -578,10 +564,6 @@ vec3 CastRay( in Ray_t ray,
     /////////////////////////////////
     // TASK: WRITE YOUR CODE HERE. //
     /////////////////////////////////
-
-
-
-
 
     // Accumulate lighting from each light source on the nearest hit point.
     for (int i = 0; i < NUM_LIGHTS; i++) {
