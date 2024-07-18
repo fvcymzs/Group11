@@ -53,6 +53,7 @@ const int NUM_PLANES = 5;
 const int NUM_SPHERES = 70;
 const int NUM_METEORITE = 3;
 const int NUM_ASTEROIDS = 50;
+const int NUM_DISKS = 4;
 
 
 //============================================================================
@@ -72,6 +73,13 @@ struct Plane_t {
 struct Sphere_t {
     vec3 center;
     float radius;
+    int materialID;
+};
+
+struct Disk_t {
+    vec3 center;
+    float innerRadius;
+    float outerRadius;
     int materialID;
 };
 
@@ -109,6 +117,7 @@ Plane_t Plane[NUM_PLANES];
 Sphere_t Sphere[NUM_SPHERES];
 Light_t Light[NUM_LIGHTS];
 Material_t Material[NUM_MATERIALS];
+Disk_t Disk[NUM_DISKS];
 
 
 // random function returns float numbers in (0,1)
@@ -228,8 +237,8 @@ void InitScene()
     for (int i = 0; i < NUM_METEORITE; i++) {
         float circle = rand() * 14.0 + 3.0; // (3.0,17.0)
         float delx = rand() + 9.5; // (9.5,10.5)
-        float velocity = rand() * 4.0; // (0,4)
-        float rad = rand() * 0.02 + 0.02; // (0.02, 0.04)
+        float velocity = rand() * 3.9 + 0.1; // (0.1,4)
+        float rad = rand() * 0.02 + 0.01; // (0.01, 0.03)
         float t0 = rand() * 100.0;
         Sphere[i+10].center = vec3(circle * cos((iTime + t0) * velocity), delx, circle * sin((iTime + t0) * velocity));
         Sphere[i+10].radius = rad;
@@ -248,6 +257,29 @@ void InitScene()
         Sphere[i+10+NUM_METEORITE].materialID = 12;
     }
 
+    // Jupiter ring
+    Disk[0].center = Sphere[5].center; // Jupiter's position
+    Disk[0].innerRadius = 0.9;
+    Disk[0].outerRadius = 1.0;
+    Disk[0].materialID = 13;
+
+    // Saturn ring
+    Disk[1].center = Sphere[6].center; // Saturn's position
+    Disk[1].innerRadius = 0.7;
+    Disk[1].outerRadius = 1.2;
+    Disk[1].materialID = 13;
+
+    // Uranus ring
+    Disk[2].center = Sphere[6].center; // Uranus's position
+    Disk[2].innerRadius = 0.5;
+    Disk[2].outerRadius = 0.7;
+    Disk[2].materialID = 13;
+
+    // Neptune ring
+    Disk[3].center = Sphere[6].center; // Neptune's position
+    Disk[3].innerRadius = 0.4;
+    Disk[3].outerRadius = 0.5;
+    Disk[3].materialID = 13;
 
     // Silver material.
     Material[0].k_d = vec3(0.3, 0.3, 0.3);
@@ -263,7 +295,7 @@ void InitScene()
     Material[1].k_rg = 0.5 * Material[1].k_r;
     Material[1].n = 64.0;
 
-     // Mercury material.
+    // Mercury material.
     Material[2].k_d = vec3(188.0 / 255.0, 188.0 / 255.0, 169.0 / 255.0);
     Material[2].k_a = 0.2 * Material[2].k_d;
     Material[2].k_r = vec3(0.1, 0.1, 0.1);
@@ -340,6 +372,13 @@ void InitScene()
     Material[12].k_r = vec3(0.2, 0.2, 0.2);
     Material[12].k_rg = vec3(0.1, 0.1, 0.1);
     Material[12].n = 128.0;
+    
+    // Planetary Ring material.
+    Material[13].k_d = vec3(200.0 / 255.0, 200.0 / 255.0, 200.0 / 255.0);
+    Material[13].k_a = 0.2 * Material[13].k_d;
+    Material[13].k_r = vec3(0.2, 0.2, 0.2);
+    Material[13].k_rg = vec3(0.1, 0.1, 0.1);
+    Material[13].n = 64.0;
 
 
     // Light 0.
@@ -485,6 +524,51 @@ bool IntersectSphere( in Sphere_t sph, in Ray_t ray, in float tmin, in float tma
 }
 
 
+/////////////////////////////////////////////////////////////////////////////
+// Computes intersection between a sphere and a disk.
+// Returns true if there is an intersection where the disk parameter t is
+// between tmin and tmax, otherwise returns false.
+// If there is one or two such intersections, outputs the value of the
+// smaller t, the position of the intersection (hitPos) and the normal
+// vector at the intersection (hitNormal).
+/////////////////////////////////////////////////////////////////////////////
+bool IntersectDisk(in Disk_t disk, in Ray_t ray, in float tmin, in float tmax,
+                   out float t, out vec3 hitPos, out vec3 hitNormal)
+{
+    vec3 N = vec3(0.0, 1.0, 0.0); // Normal vector of the disk (assume it's horizontal)
+    float NRd = dot(N, ray.d);
+    if (abs(NRd) < 1.0e-6) return false;
+
+    float t0 = dot(N, disk.center - ray.o) / NRd;
+    if (t0 < tmin || t0 > tmax) return false;
+
+    hitPos = ray.o + t0 * ray.d;
+    float dist = length(hitPos.xz - disk.center.xz);
+    if (dist < disk.innerRadius || dist > disk.outerRadius) return false;
+
+    t = t0;
+    hitNormal = N;
+    return true;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Computes intersection between a sphere and a disk.
+// Returns true if there is an intersection where the disk parameter t is
+// between tmin and tmax, otherwise returns false.
+/////////////////////////////////////////////////////////////////////////////
+bool IntersectDisk(in Disk_t disk, in Ray_t ray, in float tmin, in float tmax)
+{
+    vec3 N = vec3(0.0, 1.0, 0.0); // Normal vector of the disk (assume it's horizontal)
+    float NRd = dot(N, ray.d);
+    if (abs(NRd) < 1.0e-6) return false;
+
+    float t0 = dot(N, disk.center - ray.o) / NRd;
+    if (t0 < tmin || t0 > tmax) return false;
+
+    return true;
+}
+
 
 /////////////////////////////////////////////////////////////////////////////
 // Computes (I_a * k_a) + k_shadow * I_source * [ k_d * (N.L) + k_r * (R.V)^n ].
@@ -571,6 +655,15 @@ vec3 CastRay( in Ray_t ray,
             nearest_hitMatID = Sphere[i].materialID;
         }
     }
+    for (int i = 0; i < NUM_DISKS; i++) {
+        if (IntersectDisk(Disk[i], ray, DEFAULT_TMIN, nearest_t, temp_t, temp_hitPos, temp_hitNormal)) {
+            hasHitSomething = true;
+            nearest_t = temp_t;
+            nearest_hitPos = temp_hitPos;
+            nearest_hitNormal = temp_hitNormal;
+            nearest_hitMatID = Disk[i].materialID;
+        }
+    }
 
 
     // One of the output results.
@@ -610,6 +703,15 @@ vec3 CastRay( in Ray_t ray,
         if (!inShadow) {
             for (int j = 0; j < NUM_SPHERES; j++) {
                 if (IntersectSphere(Sphere[j], shadowRay, DEFAULT_TMIN, length(Light[i].position - nearest_hitPos))) {
+                    inShadow = true;
+                    break;
+                }
+            }
+        }
+
+        if (!inShadow) {
+            for (int j = 0; j < NUM_DISKS; j++) {
+                if (IntersectDisk(Disk[j], shadowRay, DEFAULT_TMIN, length(Light[i].position - nearest_hitPos))) {
                     inShadow = true;
                     break;
                 }
